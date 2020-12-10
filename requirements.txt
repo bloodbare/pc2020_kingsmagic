@@ -1,0 +1,10 @@
+scipy
+tensorflow==2.3.1
+tensorflow-hub
+tensorflowjs
+sentencepiece
+pandas
+numpy
+sklearn
+tfds-nightly
+clean-text

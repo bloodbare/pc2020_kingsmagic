@@ -1,0 +1,44 @@
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/universal-sentence-encoder"></script>
+<script>
+
+async function loadTokenizer() {
+    return use.loadTokenizer();
+}
+
+async function load() {
+    window.use_inst = await use.load();
+    window.model = await tf.loadLayersModel('./jsmodel/model.json');
+    document.getElementById("output").innerHTML = "Loaded!"
+    console.log('Loaded')
+}
+
+
+async function compute() {
+    const input = document.getElementById("value").value;
+    const encodings = await window.use_inst.embed([input]);
+    encodings.print()
+    const predictions = await window.model.predict(encodings);
+    predictions.print()
+    const predsArr = await predictions.array();
+    console.log(value);
+    if (predsArr[0][0] > 0.9) {
+        document.getElementById("toxic").innerHTML = "Its toxic!"
+    } else {
+        document.getElementById("toxic").innerHTML = "Its not toxic!"
+    }
+    tf.dispose([encodings, predictions]);
+}
+
+load();
+</script> 
+</head>
+<body>
+    <input type="text" id="value" style="width: 300px; padding: 10px">
+    <button onClick="compute()">Compute</button>
+    <div id="output"></div>
+    <div id="toxic" style="width: 300px; padding: 20px; font-size: 2em;"></div>
+</body>
+</html>

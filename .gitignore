@@ -1,0 +1,8 @@
+.DS_Store
+node_modules
+vector*
+jsmodel
+model
+export
+data
+.cache
